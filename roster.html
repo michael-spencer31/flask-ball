@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    <title>Home</title>
+    
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+        <div class="container">
+            <form>
+                <div class="form-group">
+                    <label for="team">Select:</label>
+                    <select class="form-control" id="team_list">
+                        <option>Toronto Blue Jays</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+            </form>
+            <button type="button" class="btn btn-primary" onclick="getRoster()">Search</button>
+        </div>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <label for="rst"></label>
+                <div id="roster_data"></div>
+            </div>
+        </div>
+
+        <script>
+            var team_name = document.getElementById("team_list").value;
+            console.log(team_name);
+            function getRoster () {
+                $.ajax({
+                    url: '/get_roster_num',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'value': team_name}),
+                    success: function(response) {
+                        var string = String(response);
+                        string = string.replace(/#/g, '\n#');
+                        document.getElementById('roster_data').innerText = string;
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    {% endblock %}
+  </body>
+</html>
