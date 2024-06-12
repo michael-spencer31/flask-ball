@@ -19,6 +19,10 @@ def search():
     data = statsapi.standings()
     return render_template("search.html", value=data)
 
+@app.route("/roster")
+def roster():
+    return render_template("roster.html")
+
 @app.route("/")
 @cross_origin()
 def home():
@@ -42,6 +46,16 @@ def get_id_num():
     number = id[0]['primaryNumber']
     stats = statsapi.player_stat_data(id[0]['id'], group="[hitting,pitching,fielding]", type="season", sportId=1)
     return stats
+
+@app.route('/get_roster_num', methods=['POST'])
+@cross_origin()
+def get_roster_num():
+    data = request.get_json()
+    name = data['value']
+    id = statsapi.lookup_team("Boston Red Sox")
+    id_num = id[0]['id']
+    roster = statsapi.roster(id_num)
+    return roster
 
 @app.route('/get_box_score', methods=['POST'])
 @cross_origin()
