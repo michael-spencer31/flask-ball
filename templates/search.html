@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    <title>Home</title>
+    
+</head>
+<body>
+    {% extends "template.html" %}
+    {% block content %}
+
+        <div class="form-group">
+            <label for="usr">Name:</label>
+            <input text="text" class="form-control" id="player" name="player"><br>
+            <button type="button" class="btn btn-primary" onclick="getID()">Search</button>
+        </div>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <label for="abt">About:</label>
+                <p id="about_data"></p>
+                <label for="off">Hitting:</label>
+                <p id="hitting_data"></p>
+                <label for="def">Fielding:</label>
+                <p id="fielding_data"></p>
+            </div>
+        </div>
+
+        <script>
+            function getID () {
+                var player_name = document.getElementById("player").value;
+
+                $.ajax({
+                    url: '/get_id_num',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'value': player_name}),
+                    success: function(response) {
+
+                        // for some reason keys can be in different orders depending on the player
+                        // so we need to check it
+                        var hit_key, fld_key;
+                        if (response.stats[0].group == "fielding") {
+                            fld_key = 0;
+                            hit_key = 1;
+                        } else {
+                            hit_key = 0;
+                            fld_key = 1;
+                        }
+
+                        console.log(response);
+                        document.getElementById("about_data").innerHTML = response.first_name + " " + response.last_name + ", " + response.position + "<br>";
+                        document.getElementById("about_data").innerHTML += response.current_team + "<br>";
+                        document.getElementById("hitting_data").innerHTML = "Average: " + response.stats[hit_key].stats.avg + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "Homeruns: " + response.stats[hit_key].stats.homeRuns + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "Doubles: " + response.stats[hit_key].stats.doubles + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "Triples: " + response.stats[hit_key].stats.triples + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "Hits: " + response.stats[hit_key].stats.hits + "<br>";
+                        document.getElementById("fielding_data").innerHTML += "Fielding: " + response.stats[fld_key].stats.fielding + "<br>";
+                        document.getElementById("fielding_data").innerHTML += "Errors: " + response.stats[fld_key].stats.errors + "<br>";
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+        
+    {% endblock %}
+  </body>
+</html>

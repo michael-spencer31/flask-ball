@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    <title>Home</title>
+    
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+        <a href="">
+                
+            <div class="click-div">
+                <p>Toronto (23, 44)</p> 
+                <p>Montreal (55, 2)</p>
+            </div> 
+        </a>        
+    
+        <p id="games"></p>
+        <script>
+
+            var data = JSON.parse(' {{ value | tojson | safe}}');
+            console.log(data);
+            var num_games = data.totalGames;
+            console.log(num_games);
+
+            $.ajax({
+                url: '/get_box_score',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+            /**
+            for (var i = 0; i < num_games; i++) {
+                document.getElementById("games").innerHTML += data.dates[0].games[i].teams.away.team.name + " ";
+                document.getElementById("games").innerHTML += "(" + data.dates[0].games[i].teams.away.leagueRecord.wins + ", " + data.dates[0].games[i].teams.away.leagueRecord.losses + ")<br>";
+                document.getElementById("games").innerHTML += data.dates[0].games[i].teams.home.team.name + " ";
+                document.getElementById("games").innerHTML += "(" + data.dates[0].games[i].teams.home.leagueRecord.wins + ", " + data.dates[0].games[i].teams.home.leagueRecord.losses + ")<br><br>";
+            }
+            */
+
+        </script>
+    {% endblock %}
+  </body>
+</html>
