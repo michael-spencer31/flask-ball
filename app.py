@@ -33,6 +33,11 @@ def search():
 def roster():
     return render_template("roster.html")
 
+# landing page for about
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 # landing page for standings
 @app.route("/standings")
 def standings():
@@ -91,9 +96,10 @@ def get_id_num():
 def get_roster_num():
     data = request.get_json()
     name = data['value']
-    id = statsapi.lookup_team("Boston Red Sox")
+    print(name)
+    id = statsapi.lookup_team(name)
     id_num = id[0]['id']
-    roster = statsapi.rofster(id_num)
+    roster = statsapi.roster(id_num)
     return roster
 
 @app.route('/get_box_score', methods=['POST'])
@@ -103,6 +109,6 @@ def get_box_score():
     return statsapi.standings()
         
 # use to run locally on port 5000 (by default)
-# set debug=True for testing
+# remove this when moving to prod
 if __name__ == '__main__':
     app.run(debug=True)

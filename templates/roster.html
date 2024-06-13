@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="icon" href="/static/images/baseball.png">
     <meta name="viewport" content="width=device-width">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/template.css">
@@ -16,9 +17,36 @@
                 <div class="form-group">
                     <label for="team">Select:</label>
                     <select class="form-control" id="team_list">
-                        <option>Toronto Blue Jays</option>
-                        <option>2</option>
-                        <option>3</option>
+                        <option value="Arizona Diamondbacks">Arizona Diamondbacks</option>
+                        <option value="Atlanta Braves">Atlanta Braves</option>
+                        <option value="Baltimore Orioles">Baltimore Orioles</option>
+                        <option value="Boston Red Sox">Boston Red Sox</option>
+                        <option value="Chicago White Sox">Chicago White Sox</option>
+                        <option value="Chicago Cubs">Chicago Cubs</option>
+                        <option value="Cincinnati Reds">Cincinnati Reds</option>
+                        <option value="Cleveland Guardians">Cleveland Guardians</option>
+                        <option value="Colorado Rockies">Colorado Rockies</option>
+                        <option value="Detroit Tigers">Detroit Tigers</option>
+                        <option value="Houston Astros">Houston Astros</option>
+                        <option value="Kansas City Royals">Kansas City Royals</option>
+                        <option value="Los Angeles Angels">Los Angeles Angels</option>
+                        <option value="Los Angeles Dodgers">Los Angeles Dodgers</option>
+                        <option value="Miami Marlins">Miami Marlins</option>
+                        <option value="Milwaukee Brewers">Milwaukee Brewers</option>
+                        <option value="Minnesota Twins">Minnesota Twins</option>
+                        <option value="New York Yankees">New York Yankees</option>
+                        <option value="New York Mets">New York Mets</option>
+                        <option value="Oakland Athletics">Oakland Athletics</option>
+                        <option value="Philadelphia Phillies">Philadelphia Phillies</option>
+                        <option value="Pittsburgh Pirates">Pittsburgh Pirates</option>
+                        <option value="San Diego Padres">San Diego Padres</option>
+                        <option value="San Francisco Giants">San Francisco Giants</option>
+                        <option value="Seattle Mariners">Seattle Mariners</option>
+                        <option value="St. Louis Cardinals">St. Louis Cardinals</option>
+                        <option value="Tampa Bay Rays">Tampa Bay Rays</option>
+                        <option value="Texas Rangers">Texas Rangers</option>
+                        <option value="Toronto Blue Jays">Toronto Blue Jays</option>
+                        <option value="Washington Nationals">Washington Nationals</option>                         
                     </select>
                 </div>
             </form>
@@ -33,9 +61,8 @@
         </div>
 
         <script>
-            var team_name = document.getElementById("team_list").value;
-            console.log(team_name);
             function getRoster () {
+                var team_name = document.getElementById("team_list").value;
                 $.ajax({
                     url: '/get_roster_num',
                     type: 'POST',
@@ -43,6 +70,7 @@
                     data: JSON.stringify({'value': team_name}),
                     success: function(response) {
                         var string = String(response);
+                        //use regex to replace the extra '#' symbols in text
                         string = string.replace(/#/g, '\n#');
                         document.getElementById('roster_data').innerText = string;
                     },
