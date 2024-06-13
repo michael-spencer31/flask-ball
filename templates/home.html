@@ -11,13 +11,9 @@
   <body>
     {% extends "template.html" %}
     {% block content %}
-        <a href="">
                 
-            <div class="click-div">
-                <p>Toronto (23, 44)</p> 
-                <p>Montreal (55, 2)</p>
-            </div> 
-        </a>        
+        <h3>Today's Games</h3>
+        <p>Click on any game for more details. Note this may take a few seconds to load due to the amount of data returned.</p>
         <div class="container">
             <div class="panel panel-default">
                 <p id="games"></p>   
@@ -33,10 +29,15 @@
                 success: function(response) {
 
                     response.forEach(element => {
-                        document.getElementById("games").innerHTML += element['away_name'] + " " + element['away_score'] + "<br>" + element['home_name'] + " " + element['home_score'] + "<br>";
-                        document.getElementById("games").innerHTML += element['summary'] + "<br><br>";
-                        console.log(element)
+                        var game_id = element.game_id;
+                        let gameInfo = document.createElement('a');
+                        gameInfo.textContent = element['away_name'] + " " + element['away_score'] + " vs " + element['home_name'] + " " + element['home_score'];
+                        gameInfo.href = "/details?id=" + game_id; // Replace '#' with the link destination for the game
+                        gameInfo.innerHTML += "<br>" + element['summary'] + "<br><br>";
+
+                        document.getElementById("games").appendChild(gameInfo);
                     });
+                                        
                 },
                 error: function(error) {
                     console.log(error);

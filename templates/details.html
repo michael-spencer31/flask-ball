@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    <title>Home</title>
+    
+</head>
+<body>
+    {% extends "template.html" %}
+    {% block content %}
+        <h3>Linescore</h3>
+        <p id="linescore"></p>
+        <h3>Scoring Plays</h3>
+        <p id="scoring_plays"></p>
+        <h3>Box Score</h3>
+        <p id="boxscore"></p>
+
+        <script>
+            // get the query parameter the user sent 
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            $.ajax({
+                    url: '/get_line_score',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'value': id}),
+                    success: function(response) {
+
+                        document.getElementById("linescore").innerText = response['line'] + "\n\n\n";
+                        document.getElementById("scoring_plays").innerText = response['scoring'] + "\n\n\n";
+                        document.getElementById("boxscore").innerText = response['box'] + "\n\n\n";
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+        </script>
+        
+    {% endblock %}
+  </body>
+</html>

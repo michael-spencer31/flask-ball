@@ -38,6 +38,29 @@ def roster():
 def standings():
     return render_template("standings.html")
 
+# landing page for schedule
+@app.route("/schedule")
+def schedule():
+    return render_template("schedule.html")
+
+# landing page for details
+@app.route("/details")
+def details():
+    return render_template("details.html")
+
+@app.route("/get_line_score", methods=["POST"])
+@cross_origin()
+def get_line_score():
+
+    data = request.get_json()
+    id = data['value']
+
+    line = statsapi.linescore(id)
+    box = statsapi.boxscore(id)
+    scoring = statsapi.game_scoring_plays(id)
+
+    all_data = {'line': line, 'box': box, 'scoring': scoring}
+    return jsonify(all_data)
 
 @app.route('/get_schedule', methods=['POST'])
 @cross_origin()

@@ -19,17 +19,16 @@
         </div>
         <script>
             $.ajax({
-                    url: '/get_standings',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function(response) {
-                        document.getElementById('standings').innerText = response;
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-           
+                url: '/get_standings',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                    document.getElementById('standings').innerText = response;
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         </script>
     {% endblock %}
   </body>
