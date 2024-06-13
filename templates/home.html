@@ -18,35 +18,31 @@
                 <p>Montreal (55, 2)</p>
             </div> 
         </a>        
-    
-        <p id="games"></p>
+        <div class="container">
+            <div class="panel panel-default">
+                <p id="games"></p>   
+            </div>
+        </div>
         <script>
 
-            var data = JSON.parse(' {{ value | tojson | safe}}');
-            console.log(data);
-            var num_games = data.totalGames;
-            console.log(num_games);
-
             $.ajax({
-                url: '/get_box_score',
+                url: '/get_schedule',
                 type: 'POST',
+                async: false,
                 contentType: 'application/json',
                 success: function(response) {
-                    console.log(response);
+
+                    response.forEach(element => {
+                        document.getElementById("games").innerHTML += element['away_name'] + " " + element['away_score'] + "<br>" + element['home_name'] + " " + element['home_score'] + "<br>";
+                        document.getElementById("games").innerHTML += element['summary'] + "<br><br>";
+                        console.log(element)
+                    });
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
-            /**
-            for (var i = 0; i < num_games; i++) {
-                document.getElementById("games").innerHTML += data.dates[0].games[i].teams.away.team.name + " ";
-                document.getElementById("games").innerHTML += "(" + data.dates[0].games[i].teams.away.leagueRecord.wins + ", " + data.dates[0].games[i].teams.away.leagueRecord.losses + ")<br>";
-                document.getElementById("games").innerHTML += data.dates[0].games[i].teams.home.team.name + " ";
-                document.getElementById("games").innerHTML += "(" + data.dates[0].games[i].teams.home.leagueRecord.wins + ", " + data.dates[0].games[i].teams.home.leagueRecord.losses + ")<br><br>";
-            }
-            */
-
+           
         </script>
     {% endblock %}
   </body>

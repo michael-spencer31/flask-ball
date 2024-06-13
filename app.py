@@ -6,7 +6,9 @@ from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS, cross_origin
 import requests, csv, argparse
 from urllib.request import urlopen
+import urllib.parse
 from bs4 import BeautifulSoup as bs
+from datetime import datetime
 import os, re
 
 app = Flask(__name__)
@@ -14,28 +16,42 @@ cors = CORS(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+# default landing page
+@app.route("/")
+@cross_origin()
+def home():
+    return render_template("home.html")
+
+# landing page for search
 @app.route("/search")
 def search():
     data = statsapi.standings()
     return render_template("search.html", value=data)
 
+# landing page for roster
 @app.route("/roster")
 def roster():
     return render_template("roster.html")
 
-@app.route("/")
-@cross_origin()
-def home():
-    url = "http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=2024-06-11&endDate=2024-06-11"
-    player = statsapi.lookup_player('springer,')
-    print(player[0]['id']) #assume only 1 record returned for demo purposes
+# landing page for standings
+@app.route("/standings")
+def standings():
+    return render_template("standings.html")
 
+
+@app.route('/get_schedule', methods=['POST'])
+@cross_origin()
+def get_schedule():
     
-    resp = requests.get(url)
-    data = resp.json()
-    print(statsapi.player_stat_data(543807, group="[hitting,pitching,fielding]", type="season", sportId=1))
-    mlb = mlbstatsapi.Mlb() 
-    return render_template("home.html", value=data)
+    today = statsapi.schedule()
+
+    return today
+
+@app.route('/get_standings', methods=['POST'])
+@cross_origin()
+def get_standings():
+    standings = statsapi.standings()
+    return standings
 
 @app.route('/get_id_num', methods=['POST'])
 @cross_origin()
@@ -54,7 +70,7 @@ def get_roster_num():
     name = data['value']
     id = statsapi.lookup_team("Boston Red Sox")
     id_num = id[0]['id']
-    roster = statsapi.roster(id_num)
+    roster = statsapi.rofster(id_num)
     return roster
 
 @app.route('/get_box_score', methods=['POST'])

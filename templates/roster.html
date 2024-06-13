@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label for="team">Select:</label>
                     <select class="form-control" id="team_list">
-                        <option>1</option>
+                        <option>Toronto Blue Jays</option>
                         <option>2</option>
                         <option>3</option>
                     </select>
@@ -28,7 +28,7 @@
         <div class="container">
             <div class="panel panel-default">
                 <label for="rst"></label>
-                <p id="roster_data"></p>
+                <div id="roster_data"></div>
             </div>
         </div>
 
@@ -42,11 +42,9 @@
                     contentType: 'application/json',
                     data: JSON.stringify({'value': team_name}),
                     success: function(response) {
-                        //var json = response.split(' ');
-                        var string = response;
-                        document.getElementById("roster_data").innerHTML = string;
-
-                        document.getElementById("roster_data").innerHTML = string.replace((/\|/g,"#<br>"));
+                        var string = String(response);
+                        string = string.replace(/#/g, '\n#');
+                        document.getElementById('roster_data').innerText = string;
                     },
                     error: function (error) {
                         console.log(error);
