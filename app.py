@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup as bs
 from datetime import datetime
 import os, re
 
+
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -52,6 +53,26 @@ def schedule():
 @app.route("/details")
 def details():
     return render_template("details.html")
+
+@app.route("/schedule_date", methods=["POST"])
+@cross_origin()
+def schedule_date():
+
+    data = request.get_json()
+    day = data['day']
+    month = data['month']
+    year = data['year']
+
+    formated_date = format_date(day, month, year)
+    formated_date = f'{year}-{month}-{day}'
+    url = f'https://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&date={formated_date}'
+    response = requests.get(url)
+    print (response.json())
+    return response.json()
+
+def format_date(day, month, year):
+    date = datetime(year, month, day)
+    return date.strftime('%Y%m%d')
 
 @app.route("/get_line_score", methods=["POST"])
 @cross_origin()
@@ -105,7 +126,6 @@ def get_roster_num():
 @app.route('/get_box_score', methods=['POST'])
 @cross_origin()
 def get_box_score():
-    # print(statsapi.standings())
     return statsapi.standings()
         
 # use to run locally on port 5000 (by default)
