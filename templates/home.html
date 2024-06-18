@@ -33,7 +33,7 @@
                         var game_id = element.game_id;
                         let gameInfo = document.createElement('a');
                         gameInfo.textContent = element['away_name'] + " " + element['away_score'] + " vs " + element['home_name'] + " " + element['home_score'];
-                        gameInfo.href = "/details?id=" + game_id; // Replace '#' with the link destination for the game
+                        gameInfo.href = "/details?id=" + game_id; // use a game_id as a query parameter
                         gameInfo.innerHTML += "<br>" + element['summary'] + "<br><br>";
 
                         document.getElementById("games").appendChild(gameInfo);

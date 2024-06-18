@@ -45,6 +45,19 @@ def schedule():
 def details():
     return render_template("details.html")
 
+# Landing page for leaders
+@app.route("/leaders")
+def leaders():
+    return render_template("leaders.html")
+
+
+@app.route("/get_leaders", methods=["POST"])
+def get_leaders():
+    data_in = request.get_json()
+    option = data_in['value']
+    data = statsapi.league_leaders(option, statGroup='hitting',limit=10,sportId=1,statType='season')
+    return data
+
 # Endpoint to get schedule for a specific date
 @app.route("/schedule_date", methods=["POST"])
 @cross_origin()

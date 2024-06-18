@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/static/images/baseball.png">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/template.css">
+    <title>Home</title>
+    
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+            
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="container">
+                    <form>
+                        <div class="form-group">
+                            <label for="team">Select:</label>
+                            <select class="form-control" id="options">
+                                <option value="homeruns">Homeruns</option>
+                                <option value="doubles">Doubles</option>
+                                <option value="triples">Triples</option>
+                                <option value="hits">Hits</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="getLeaders(options.value)">Search</button>
+                    </form>
+                </div>
+                <p id="leaders"></p>   
+            </div>
+        </div>
+            
+        <script>
+
+            function getLeaders (option) {
+
+                $.ajax({
+                    url: '/get_leaders',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'value': option}),
+                    success: function(response) {
+
+                        document.getElementById("leaders").innerText = response; 
+                                            
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        </script>
+    {% endblock %}
+  </body>
+</html>
