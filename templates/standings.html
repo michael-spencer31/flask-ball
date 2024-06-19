@@ -1,36 +1,103 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="icon" href="/static/images/baseball.png">
     <meta name="viewport" content="width=device-width">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/template.css">
     <title>Home</title>
-    
-  </head>
-  <body>
+</head>
+<body>
     {% extends "template.html" %}
     {% block content %}
-               
-        <div class="container">
-            <div class="panel panel-default">
-                <p id="standings"></p>   
-            </div>
+    <div class="container">
+        <div class="panel panel-default">
+            <div id="divisionTables"></div>
+			<p id="standings"></p>
         </div>
-        <script>
+    </div>
+
+    <script>
+        $(document).ready(function () {
             $.ajax({
-                url: '/get_standings',
-                type: 'POST',
-                contentType: 'application/json',
-                success: function(response) {
-                    document.getElementById('standings').innerText = response;
+                url: "/get_standings",
+                type: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    response = response.split("\n\n");
+					var dict;
+					
+					var division = convertStandingsStringToDict(response[0]);
+					console.log(division);
+					const table = generateStandingsTable(division);
+					const container = document.getElementById("standings");
+					container.appendChild(table);
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
-        </script>
+        });
+
+		function convertStandingsStringToDict(standingsString) {
+			// Split the string by lines
+			const lines = standingsString.trim().split('\n');
+			
+			// Initialize an empty array to hold team objects
+			const teams = [];
+			
+			// Process each line to extract team data
+			lines.forEach((line) => {
+				// Split line by any amount of whitespace
+				const data = line.trim().split(/\s+/);
+				
+				// Extract specific data elements
+				const teamName = data.slice(1, -7).join(' '); // Join team name if it contains multiple words
+				const w = parseInt(data[data.length - 7], 10);
+				const l = parseInt(data[data.length - 6], 10);
+				const gb = parseFloat(data[data.length - 5]);
+				
+				// Create team object with only required fields
+				const teamObj = {
+				Team: teamName,
+				W: w,
+				L: l,
+				GB: gb
+				};
+				
+				// Add team object to teams array
+				teams.push(teamObj);
+			});
+			
+			// Create the final standings object
+			return teams;
+		}
+		// Generate HTML table dynamically
+function generateStandingsTable(data) {
+	// Create table element
+	const table = document.createElement('table');
+	
+	// Create table header row
+	const headerRow = table.insertRow();
+	Object.keys(data[0]).forEach((key) => {
+		const headerCell = document.createElement('th');
+		headerCell.textContent = key;
+		headerRow.appendChild(headerCell);
+	});
+	
+	// Create table body rows
+	data.forEach((team) => {
+		const row = table.insertRow();
+		Object.values(team).forEach((value) => {
+			const cell = row.insertCell();
+			cell.textContent = value;
+		});
+	});
+	
+	return table;
+}
+    </script>
     {% endblock %}
-  </body>
+</body>
 </html>

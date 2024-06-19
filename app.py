@@ -107,7 +107,7 @@ def get_schedule():
 @app.route('/get_standings', methods=['POST'])
 @cross_origin()
 def get_standings():
-    standings = statsapi.standings()
+    standings = statsapi.standings(include_wildcard=True)
     return standings
 
 # Endpoint to get player ID number
