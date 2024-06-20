@@ -158,7 +158,7 @@ function convertStandingsStringToDict(standingsString) {
             L: l,
             GB: gb,
             WC: wc,
-            WP: Math.round(w/(w + l) * 100)
+            WP: Math.round(w/(w + l) * 100) /100
         };
         
         // Add team object to teams array
