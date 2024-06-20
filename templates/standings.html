@@ -27,24 +27,29 @@
                 contentType: "application/json",
                 success: function (response) {
                     response = response.split("\n\n");
+					var num_division = 0;
                     response.forEach(function(divisionString, index) {
-                        var division = convertStandingsStringToDict(divisionString);
-                        var divisionName = getDivisionName(index); // Function to get division name
-                        console.log(divisionName);
-                        console.log(division);
+
+						if (num_division != 6) {
+
+							var division = convertStandingsStringToDict(divisionString);
+							var divisionName = getDivisionName(index); // Function to get division name
+							
+							const divisionHeader = document.createElement('h2');
+							divisionHeader.textContent = divisionName;
+							document.getElementById('standings').appendChild(divisionHeader);
                         
-                        const divisionHeader = document.createElement('h2');
-                        divisionHeader.textContent = divisionName;
-                        document.getElementById('standings').appendChild(divisionHeader);
+							const table = generateStandingsTable(division);
+							const container = document.getElementById("standings");
+							container.appendChild(table);
+							
+							// Add line break between tables, only if not the last division
+							if (index < response.length - 1) {
+								container.appendChild(document.createElement('br'));
+							}
+						}
+						num_division++;
                         
-                        const table = generateStandingsTable(division);
-                        const container = document.getElementById("standings");
-                        container.appendChild(table);
-                        
-                        // Add line break between tables, only if not the last division
-                        if (index < response.length - 1) {
-                            container.appendChild(document.createElement('br'));
-                        }
                     });
                 },
                 error: function (error) {

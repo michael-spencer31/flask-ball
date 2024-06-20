@@ -158,7 +158,7 @@ function convertStandingsStringToDict(standingsString) {
             L: l,
             GB: gb,
             WC: wc,
-            GP: w + l
+            GP: w + l,
         };
         
         // Add team object to teams array
@@ -228,7 +228,7 @@ function getDivisionName(index) {
         case 5: 
             return 'NL West'
         default:
-            return 'Unknown Division';
+            return;
     }
 }
 

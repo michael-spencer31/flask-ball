@@ -10,6 +10,13 @@
     margin-bottom: 20px;
 }
 
+.selected {
+    background-color: #ffc107;
+}
+.favorite {
+    font-weight: bold;
+    color: #c00000;
+}
 .calendar-wrapper {
     display: flex;
     align-items: center;
