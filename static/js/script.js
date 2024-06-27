@@ -132,6 +132,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial render
     renderCalendar(currentMonth, currentYear);
 });
+function convertLeadersStringToDict(leadersString) {
+    const lines = leadersString.trim().split('\n');
+
+    // Initialize an array to store player objects
+    let players = [];
+
+    // Iterate through each line
+    lines.forEach(line => {
+        
+        const data = line.trim().split(/\s+/);
+        let [rank, fname, lname, city, team1, team2, value, buffer] = data;
+        let team = "";
+        let name = `${fname} ${lname}`;
+        if (value === undefined) {
+            team = `${city} ${team1}`;
+            value = team2;
+        } else {
+            team = `${city} ${team1} ${team2}`;
+        }
+        // handle case when someone has 3 words in name (i.e. "Jr.")
+        if (buffer !== undefined) {
+            name = `${fname} ${lname} ${city}`;
+            team = `${team1} ${team2} ${value}`;
+            value = buffer;
+        } else if (buffer != undefined && value === undefined) {
+            name = `${fname} ${lname} ${city}`;
+            team = `${team1} ${team2}`;
+        }
+        const playerObj = {
+            Team: team,
+            Name: name,
+            Value: value
+        };
+        players.push(playerObj);
+            
+    });
+    return players;
+}
 
 function convertStandingsStringToDict(standingsString) {
     // Split the string by lines
@@ -144,7 +182,7 @@ function convertStandingsStringToDict(standingsString) {
     lines.forEach((line) => {
         // Split line by any amount of whitespace
         const data = line.trim().split(/\s+/);
-        
+        console.log(data);
         // Extract specific data elements
         const teamName = data.slice(1, -7).join(' '); // Join team name if it contains multiple words
         const w = parseInt(data[data.length - 7], 10);
@@ -170,7 +208,7 @@ function convertStandingsStringToDict(standingsString) {
 }
 
 // Generate HTML table dynamically
-function generateStandingsTable(data) {
+function generateTable(data, tab) {
     // Create table element
     const table = document.createElement('table');
     
@@ -184,7 +222,7 @@ function generateStandingsTable(data) {
     // Create table body rows
     data.forEach((team, index) => {
         
-        if (index >= 2) {
+        if (index >= tab) {
             const row = table.insertRow();
             
             // Add cell for team logo and name

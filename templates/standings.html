@@ -39,7 +39,7 @@
 							divisionHeader.textContent = divisionName;
 							document.getElementById('standings').appendChild(divisionHeader);
                         
-							const table = generateStandingsTable(division);
+							const table = generateTable(division, 2);
 							const container = document.getElementById("standings");
 							container.appendChild(table);
 							

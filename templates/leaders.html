@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="icon" href="/static/images/baseball.png">
     <meta name="viewport" content="width=device-width">
+    <script src="static/js/script.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/template.css">
     <title>Home</title>
@@ -44,9 +45,16 @@
                     contentType: 'application/json',
                     data: JSON.stringify({'value': option}),
                     success: function(response) {
+                        response = response.split("\n\n");
 
-                        document.getElementById("leaders").innerText = response; 
-                                            
+                        response.forEach(function(leaderString, index){
+                            var stats = convertLeadersStringToDict(leaderString);             
+
+                            var container = $(".leaders").remove();
+                            const table = generateTable(stats, 1);
+                            container = document.getElementById("leaders");
+                            container.appendChild(table);
+                        });
                     },
                     error: function(error) {
                         console.log(error);
