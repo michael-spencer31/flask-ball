@@ -22,10 +22,15 @@
                             <label for="team">Select category:</label>
                             <select class="form-control" id="options">
                                 <option value="homeruns">Homeruns</option>
-                                <option value="doubles">Doubles</option>
+                                <option value="battingAverage">Batting Average</option>
+                                <option value="double">Doubles</option>
                                 <option value="triples">Triples</option>
                                 <option value="hits">Hits</option>
                                 <option value="onBasePlusSlugging">On Base + Slugging</option>
+                                <option value="atBats">At Bats</option>
+                                <option value="runsBattedIn">RBI</option>
+                                <option value="walks">Walks</option>
+                                <option value="stolenBases">Stolen Bases</option>
                             </select>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="getLeaders(options.value)">Search</button>
@@ -46,6 +51,9 @@
                     data: JSON.stringify({'value': option}),
                     success: function(response) {
                         response = response.split("\n\n");
+                        
+                        // use jquery to clear the div after each call
+                        $("#leaders").html("");
 
                         response.forEach(function(leaderString, index){
                             var stats = convertLeadersStringToDict(leaderString);             
@@ -54,6 +62,7 @@
                             const table = generateTable(stats, 1);
                             container = document.getElementById("leaders");
                             container.appendChild(table);
+
                         });
                     },
                     error: function(error) {

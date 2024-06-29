@@ -196,7 +196,8 @@ function convertStandingsStringToDict(standingsString) {
             L: l,
             GB: gb,
             WC: wc,
-            WP: Math.round(w/(w + l) * 100) /100
+            WP: (w/(w + l)).toFixed(3)
+            //WP: Math.round(w/(w + l) * 100) /100
         };
         
         // Add team object to teams array
@@ -236,7 +237,6 @@ function generateTable(data, tab) {
             teamNameSpan.textContent = team.Team;
             teamNameSpan.classList.add('team-name');
             logoNameCell.appendChild(teamNameSpan);
-            
             // Add other data cells
             Object.keys(team).forEach((key) => {
                 if (key !== 'Team') {
