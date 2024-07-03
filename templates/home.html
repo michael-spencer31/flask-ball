@@ -31,12 +31,45 @@
 
                     response.forEach(element => {
                         var game_id = element.game_id;
-                        let gameInfo = document.createElement('a');
-                        gameInfo.textContent = element['away_name'] + " " + element['away_score'] + " vs " + element['home_name'] + " " + element['home_score'];
-                        gameInfo.href = "/details?id=" + game_id; // use a game_id as a query parameter
+                        let gameInfo = document.createElement('div');
+                        // Create elements for away team
+                        let awayTeam = document.createElement('div');
+                    
+                        let awayLogo = document.createElement('img');
+                        awayLogo.src = "static/images/logos/" + element['away_name'] + ".png"; 
+                        awayLogo.alt = element['away_name'] + " Logo";
+                        awayLogo.style.height = "25px";
+                        awayLogo.style.width = "25px";
+                        awayTeam.appendChild(awayLogo);
+                        awayTeam.innerHTML += element['away_name'] + " " + element['away_score'];
+
+                        // Create elements for home team
+                        let homeTeam = document.createElement('div');
+                        let homeLogo = document.createElement('img');
+                        homeLogo.src = "static/images/logos/" + element['home_name'] + ".png"; 
+                        homeLogo.alt = element['home_name'] + " Logo";
+                        homeLogo.style.height = "25px";
+                        homeLogo.style.width = "25px";
+                        homeTeam.appendChild(homeLogo);
+                        homeTeam.innerHTML += element['home_name'] + " " + element['home_score'];
+
+                        // Combine away and home team elements
+                        gameInfo.appendChild(awayTeam);
+                        gameInfo.appendChild(homeTeam);
+
+                        // Add summary text with line breaks
                         gameInfo.innerHTML += "<br>" + element['summary'] + "<br><br>";
 
-                        document.getElementById("games").appendChild(gameInfo);
+                        // Create link element and set href
+                        let gameLink = document.createElement('a');
+                        gameLink.href = "/details?id=" + game_id;
+
+                        // Append gameInfo to the link element
+                        gameLink.appendChild(gameInfo);
+
+                        // Append the link element to the document body
+                        document.body.appendChild(gameLink);
+
                     });
                                         
                 },
