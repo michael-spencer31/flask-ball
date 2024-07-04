@@ -47,12 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleDateClick(day, month, year) {
+        
 
         // clear the page each time the button is clicked
         $("#schedule").html("");
         $("#gameInfo").html("");
         $("#awayDiv").html("");
         $("#homeDiv").html("");
+        $(".schedule").remove();
+        $(".gameInfo").remove();
         $.ajax({
             url: '/schedule_date',
             type: 'POST',

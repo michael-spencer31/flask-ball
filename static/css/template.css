@@ -10,6 +10,10 @@
     margin-bottom: 20px;
 }
 
+*:has(> table) {
+    overflow-y: scroll;
+}
+
 .selected {
     background-color: #ffc107;
 }

@@ -23,7 +23,10 @@
     <p id="schedule"></p>
     <script>
         $("#schedule").html("");
+        var container = $(".schedule").remove();
         $("#gameInfo").html("");
+        $(".gameInfo").remove();
+        $("#homeTeam").html("");
         $.ajax({
             url: '/get_schedule',
             type: 'POST',
