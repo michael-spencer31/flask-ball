@@ -49,7 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleDateClick(day, month, year) {
 
         // clear the page each time the button is clicked
-        document.getElementById("schedule").innerText = "";
+        $("#schedule").html("");
+        $("#gameInfo").html("");
+        $("#awayDiv").html("");
+        $("#homeDiv").html("");
         $.ajax({
             url: '/schedule_date',
             type: 'POST',
@@ -57,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
             data: JSON.stringify({'day': day, 'month': month + 1, 'year': year}),
             contentType: 'application/json',
             success: function(data) {
+
+                $("#schedule").html("");
 
                 if (data.dates.length === 0 || data.dates[0].games.length === 0) {
                     document.getElementById("schedule").innerText = "No games scheduled for today.";
@@ -81,15 +86,40 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (homeScore == undefined || awayScore == undefined) {
                             homeScore = 0, awayScore = 0;
                         }
+                        var game_id = gameId;
+                        let gameInfo = document.createElement('div');
+                      
+                        // Create elements for away team
+                        let awayDiv = document.createElement('div');
+                        
+                        let awayLogo = document.createElement('img');
+                        awayLogo.src = "static/images/logos/" + awayTeam + ".png"; 
+                        awayLogo.alt = awayTeam + " Logo";
+                        awayLogo.style.height = "25px";
+                        awayLogo.style.width = "25px";
+                        awayDiv.appendChild(awayLogo);
+                        awayDiv.innerHTML += awayTeam + " " + awayScore;
 
-                        console.log(homeScore);
-                        // Print the summary for each game
-                        document.getElementById("schedule").innerText += (`Date: ${gameDate}` + ' ');
-                        document.getElementById("schedule").innerText += (' ' + `Teams: ${awayTeam} @ ${homeTeam}` + ' ');
-                        document.getElementById("schedule").innerText += (' ' + `Venue: ${venue}` + ' ');
-                        document.getElementById("schedule").innerText += (' ' + `Status: ${status}` + ' ');
-                        document.getElementById("schedule").innerText += (' ' + `${awayTeam} ${awayScore} - ${homeTeam} ${homeScore}`+ ' ');
-                        document.getElementById("schedule").innerText += ("\n\n" + ' ');
+                        // Create elements for home team
+                        let homeDiv = document.createElement('div');
+                        let homeLogo = document.createElement('img');
+                        homeLogo.src = "static/images/logos/" + homeTeam + ".png"; 
+                        homeLogo.alt = homeTeam + " Logo";
+                        homeLogo.style.height = "25px";
+                        homeLogo.style.width = "25px";
+                        homeDiv.appendChild(homeLogo);
+                        homeDiv.innerHTML += homeTeam + " " + homeScore;
+
+                        // Combine away and home team elements
+                        gameInfo.appendChild(awayDiv);
+                        gameInfo.appendChild(homeDiv);
+
+                        document.getElementById("schedule").appendChild(gameInfo);
+                        // Add summary text with line breaks
+                        gameInfo.innerHTML += "<br>" + status + "<br>";   //+ element['summary'] + "<br><br>";
+
+                        
+                       
                     });
                 });
             },
@@ -182,7 +212,6 @@ function convertStandingsStringToDict(standingsString) {
     lines.forEach((line) => {
         // Split line by any amount of whitespace
         const data = line.trim().split(/\s+/);
-        console.log(data);
         // Extract specific data elements
         const teamName = data.slice(1, -7).join(' '); // Join team name if it contains multiple words
         const w = parseInt(data[data.length - 7], 10);
@@ -197,7 +226,6 @@ function convertStandingsStringToDict(standingsString) {
             GB: gb,
             WC: wc,
             WP: (w/(w + l)).toFixed(3)
-            //WP: Math.round(w/(w + l) * 100) /100
         };
         
         // Add team object to teams array
@@ -275,11 +303,11 @@ function getTeamLogoURL(teamName) {
 
     const teamLogos = {
         'Baltimore Orioles': '/static/images/logos/Baltimore Orioles.png',
-        'New York Yankees': '/static/images/logos/New York Yankees.jpg',
+        'New York Yankees': '/static/images/logos/New York Yankees.png',
         'New York Mets': '/static/images/logos/New York Mets.png',
         'Tampa Bay Rays': '/static/images/logos/Tampa Bay Rays.png',
         'Boston Red Sox': '/static/images/logos/Boston Red Sox.png',
-        'Cleveland Guardians':'/static/images/logos/Cleveland Guradians.png',
+        'Cleveland Guardians':'/static/images/logos/Cleveland Guardians.png',
         'Toronto Blue Jays':'/static/images/logos/Toronto Blue Jays.png',
         'Chicago White Sox':'/static/images/logos/Chicago White Sox.png',
         'Arizona Diamondbacks':'/static/images/logos/Arizona Diamondbacks.png',
@@ -293,12 +321,12 @@ function getTeamLogoURL(teamName) {
         'Detroit Tigers':'/static/images/logos/Detroit Tigers.png',
         'Oakland Athletics':'/static/images/logos/Oakland Athletics.png',
         'Seattle Mariners':'/static/images/logos/Seattle Mariners.png',
-        'Cincinnati Reds':'/static/images/logos/Cincinnati Reds.jfif',
+        'Cincinnati Reds':'/static/images/logos/Cincinnati Reds.png',
         'Los Angeles Angels':'/static/images/logos/Los Angeles Angels.png',
         'Texas Rangers':'/static/images/logos/Texas Rangers.png',
         'Milwaukee Brewers':'/static/images/logos/Milwaukee Brewers.png',
         'Pittsburgh Pirates':'/static/images/logos/Pittsburgh Pirates.png',
-        'Atlanta Braves':'/static/images/logos/Atlanta Braves.jpg',
+        'Atlanta Braves':'/static/images/logos/Atlanta Braves.png',
         'St. Louis Cardinals':'/static/images/logos/St. Louis Cardinals.png',
         'Chicago Cubs':'/static/images/logos/Chicago Cubs.png',
         'Colorado Rockies':'/static/images/logos/Colorado Rockies.png',
