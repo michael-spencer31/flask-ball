@@ -175,7 +175,7 @@ function convertLeadersStringToDict(leadersString) {
     lines.forEach(line => {
         
         const data = line.trim().split(/\s+/);
-        let [rank, fname, lname, city, team1, team2, value, buffer] = data;
+        let [rank, fname, lname, city, team1, team2, value, buffer, overflow] = data;
         let team = "";
         let name = `${fname} ${lname}`;
         if (value === undefined) {
@@ -185,13 +185,22 @@ function convertLeadersStringToDict(leadersString) {
             team = `${city} ${team1} ${team2}`;
         }
         // handle case when someone has 3 words in name (i.e. "Jr.")
-        if (buffer !== undefined) {
+        if (buffer !== undefined && overflow === undefined) {
             name = `${fname} ${lname} ${city}`;
             team = `${team1} ${team2} ${value}`;
             value = buffer;
+        } else if (overflow !== undefined) {
+            name = `${fname} ${lname} ${city} ${team1}`
+            team = `${team2} ${value} ${buffer}`;
+            value = overflow;
         } else if (buffer != undefined && value === undefined) {
             name = `${fname} ${lname} ${city}`;
             team = `${team1} ${team2}`;
+        }
+
+        if (fname == 'Elly') {
+            name = 'Elly De La Cruz';
+            team = 'Cincinnati Reds';
         }
         const playerObj = {
             Team: team,
