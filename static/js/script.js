@@ -120,8 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById("schedule").appendChild(gameInfo);
                         // Add summary text with line breaks
                         gameInfo.innerHTML += "<br>" + status + "<br>";   //+ element['summary'] + "<br><br>";
-
                         
+                        // Create link element and set href
+                        let gameLink = document.createElement('a');
+                        gameLink.href = "/details?id=" + game_id;
+
+                        // Append gameInfo to the link element
+                        gameLink.appendChild(gameInfo);
+
+                        // Append the link element to the document body
+                        document.getElementById("schedule").appendChild(gameLink);
                        
                     });
                 });

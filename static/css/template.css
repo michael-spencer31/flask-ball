@@ -56,12 +56,12 @@
 }
 
 .calendar-day.current-day {
-    background-color: #007BFF;
+    background-color: #009879;
     color: white;
 }
 
 .nav-button {
-    background-color: #007BFF;
+    background-color: #009879;
     border: none;
     color: white;
     padding: 10px 15px;
@@ -72,7 +72,11 @@
 }
 
 .nav-button:hover {
-    background-color: #0056b3;
+    background-color: #009879;
+}
+
+.btn-primary {
+    background-color: #009879 !important;
 }
 
 body {
