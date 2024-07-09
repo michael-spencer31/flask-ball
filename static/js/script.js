@@ -356,3 +356,19 @@ function getTeamLogoURL(teamName) {
     
     return teamLogos[teamName] || '/static/images/logos/default_logo.png'; // Default logo URL if not found
 }
+
+class Player {
+    constructor(name, level, HP, Attack, Defense, Magic, Resistance, Speed) {
+        this.name = name;
+        this.level = level;
+        this.HP = HP;
+        this.Attack = Attack;
+        this.Defense = Defense;
+        this.Magic = Magic;
+        this.Resistance = Resistance;
+        this.Speed = Speed;
+    }
+}
+
+let p1 = new Player("Cait", 1, 17, 5, 3, 1, 3, 4);
+
