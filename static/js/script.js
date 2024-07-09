@@ -370,5 +370,15 @@ class Player {
     }
 }
 
-let p1 = new Player("Cait", 1, 17, 5, 3, 1, 3, 4);
+class Armour {
+    constructor(name, description, defense, resistance, speed) {
+        this.name = name;
+        this.description = description;
+        this.defense = defense;
+        this.resistance = resistance;
+        this.speed = speed;
+    }
+}
 
+let p1 = new Player("Cait", 1, 17, 5, 3, 1, 3, 4);
+let a1 = new Armour("Iron Chestpiece", "A sturdy iron chestpiece", 11, 1, -2);
