@@ -20,6 +20,7 @@
         </div>
 
         <div class="container">
+            <p id="err"></p>
             <div class="panel panel-default">
                 <label for="abt">About:</label>
                 <p id="about_data"></p>
@@ -32,8 +33,12 @@
 
         <script>
             function getID () {
+                document.getElementById("err").innerHTML = "";
                 var player_name = document.getElementById("player").value;
-
+                if (!player_name.match(/\S/)) {
+                    document.getElementById("err").innerHTML = "Please specify a player";
+                    return;
+                }
                 $.ajax({
                     url: '/get_id_num',
                     type: 'POST',

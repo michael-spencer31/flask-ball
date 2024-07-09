@@ -205,8 +205,8 @@ function convertLeadersStringToDict(leadersString) {
             name = `${fname} ${lname} ${city}`;
             team = `${team1} ${team2}`;
         }
-
-        if (fname == 'Elly') {
+        // hardcode this for now due to a bug
+        if (fname == 'Elly' && lname == 'De' && city  == 'La' && team1 == 'Cruz') {
             name = 'Elly De La Cruz';
             team = 'Cincinnati Reds';
         }
