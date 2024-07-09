@@ -58,15 +58,18 @@
                         }
 
                         console.log(response);
-                        document.getElementById("about_data").innerHTML = response.first_name + " " + response.last_name + ", " + response.position + "<br>";
+                        document.getElementById("about_data").innerHTML = response.first_name + " " + response.last_name + ", " + response.stats[1].stats.position.name + "<br>";
                         document.getElementById("about_data").innerHTML += response.current_team + "<br>";
                         document.getElementById("hitting_data").innerHTML = "Average: " + response.stats[hit_key].stats.avg + "<br>";
                         document.getElementById("hitting_data").innerHTML += "Homeruns: " + response.stats[hit_key].stats.homeRuns + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "Hits: " + response.stats[hit_key].stats.hits + "<br>";
                         document.getElementById("hitting_data").innerHTML += "Doubles: " + response.stats[hit_key].stats.doubles + "<br>";
                         document.getElementById("hitting_data").innerHTML += "Triples: " + response.stats[hit_key].stats.triples + "<br>";
-                        document.getElementById("hitting_data").innerHTML += "Hits: " + response.stats[hit_key].stats.hits + "<br>";
+                        document.getElementById("hitting_data").innerHTML += "RBI: " + response.stats[hit_key].stats.rbi + "<br>";
                         document.getElementById("fielding_data").innerHTML += "Fielding: " + response.stats[fld_key].stats.fielding + "<br>";
                         document.getElementById("fielding_data").innerHTML += "Errors: " + response.stats[fld_key].stats.errors + "<br>";
+                        document.getElementById("fielding_data").innerHTML += "Innings: " + response.stats[fld_key].stats.innings + "<br>";
+
 
 
                     },
