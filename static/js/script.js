@@ -406,12 +406,13 @@ function getVal (player, armour) {
 function toString (player) {
     console.log(p1.name + " Level " + p1.level + " " + p1.job + "\nAttack " + p1.Attack + " \nDefense: " + p1.Defense + " \nResistence: " + p1.Resistance + " \nSpeed: " + p1.Speed);
 }
-
+// function to convert 24 hour to 12 hour time
 function convertTo24HourFormat (time) {
     let [hours, minutes] = time.split(':');
 
     hours = parseInt(hours);
     minutes = parseInt(minutes);
+    
     let period = hours >= 12 ? 'PM' : 'AM';
 
     hours = hours % 12;
@@ -420,4 +421,28 @@ function convertTo24HourFormat (time) {
     let time12 = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
 
     return time12;
+}
+
+function openChest() {
+
+    const odds = {
+        common: 60,
+        uncommon: 30,
+        rare: 8,
+        epic: 1,
+        legendary: 0.5
+    };
+    let randomNumber = Math.random() * 100;
+
+    if (randomNumber < odds.legendary) {
+        return "You found a legendary item!";
+    } else if (randomNumber < odds.legendary + odds.epic) {
+        return "You found an epic item!";
+    } else if (randomNumber < odds.legendary + odds.epic + odds.rare) {
+        return "You found a rare item!";
+    } else if (randomNumber < odds.legendary + odds.epic + odds.rare + odds.uncommon) {
+        return "You found an uncommon item!";
+    } else {
+        return "You found a common item.";
+    }
 }
