@@ -358,9 +358,10 @@ function getTeamLogoURL(teamName) {
 }
 
 class Player {
-    constructor(name, level, HP, Attack, Defense, Magic, Resistance, Speed) {
+    constructor(name, level, job, HP, Attack, Defense, Magic, Resistance, Speed) {
         this.name = name;
         this.level = level;
+        this.job = job;
         this.HP = HP;
         this.Attack = Attack;
         this.Defense = Defense;
@@ -380,5 +381,15 @@ class Armour {
     }
 }
 
-let p1 = new Player("Cait", 1, 17, 5, 3, 1, 3, 4);
+let p1 = new Player("Cait", "Hero", 1, 17, 5, 3, 1, 3, 4);
 let a1 = new Armour("Iron Chestpiece", "A sturdy iron chestpiece", 11, 1, -2);
+
+function getVal (player, armour) {
+    player.Defense += armour.defense;
+    player.Resistance += armour.Resistance;
+    player.Speed += armour.speed;
+}
+
+function toString (player) {
+    console.log(p1.name + " Level " + p1.level + " " + p1.job + "\nAttack " + p1.Attack + " \nDefense: " + p1.Defense + " \nResistence: " + p1.Resistance + " \nSpeed: " + p1.Speed);
+}
