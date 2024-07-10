@@ -73,7 +73,6 @@ def schedule_date():
     
     # Make the request to the MLB API
     response = requests.get(url)
-    print(response.json())
     return response.json()
 
 # Helper function to format the date
@@ -117,7 +116,6 @@ def get_id_num():
     data = request.get_json()
     name = data['value']
     id = statsapi.lookup_player(name)
-    number = id[0]['primaryNumber']
     stats = statsapi.player_stat_data(id[0]['id'], group="[hitting,pitching,fielding]", type="season", sportId=1)
     return stats
 

@@ -57,7 +57,6 @@
                             fld_key = 1;
                         }
 
-                        console.log(response);
                         document.getElementById("about_data").innerHTML = response.first_name + " " + response.last_name + ", " + response.stats[1].stats.position.name + "<br>";
                         document.getElementById("about_data").innerHTML += response.current_team + "<br>";
                         document.getElementById("hitting_data").innerHTML = "Average: " + response.stats[hit_key].stats.avg + "<br>";

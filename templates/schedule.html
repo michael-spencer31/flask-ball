@@ -35,8 +35,6 @@
             success: function(response) {
                 response.forEach(element => {
                     
-                   
-
                     var game_id = element.game_id;
                     let gameInfo = document.createElement('div');
                     // Create elements for away team
@@ -67,8 +65,15 @@
 
                     document.getElementById("schedule").appendChild(gameInfo);
                     // Add summary text with line breaks
-                    gameInfo.innerHTML += "<br>" + element['summary'] + "<br><br>";
+                    var datetime = element['game_datetime'];
+                    datestring = new Date(datetime);
+                    let hours = datestring.getHours();
+                    let minutes = datestring.getMinutes();
+                    
+                    let time = `${hours}:${minutes}`;
+                    let time12 = convertTo24HourFormat(time);
 
+                    gameInfo.innerHTML += "<br>" + element['summary'] + " " + time12 + "<br><br>";
                     // Create link element and set href
                     let gameLink = document.createElement('a');
                     gameLink.href = "/details?id=" + game_id;
