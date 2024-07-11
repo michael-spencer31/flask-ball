@@ -423,6 +423,22 @@ class Player {
 	set defense (newDefense) {
 		this._defense = newDefense;
 	}
+
+	get resistance () {
+		return this._resistence;
+	}
+
+	set resistance (newResistence) {
+		this._resistence = newResistence;
+	}
+
+	get charm () {
+		return this._charm;
+	}
+
+	set charm (newCharm) {
+		return this._charm = newCharm;
+	}
   }
   let p1 = new Player("Cait", 1, "Hero", 14, 5, 4, 1, 4, 7, 3);
   
