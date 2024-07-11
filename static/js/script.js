@@ -387,3 +387,42 @@ function convertTo24HourFormat (time) {
     return time12;
 }
 
+class Player {
+    constructor(name, level, job, hp, attack, defense, magic, resistance, speed, charm) {
+      this.name = name;
+      this.level = level;
+      this.job = job;
+      this.hp = hp;
+      this.attack = attack;
+      this.defense = defense;
+      this.magic = magic;
+      this.resistance = resistance;
+      this.speed = speed;
+      this.charm = charm;
+  
+    }
+    get attack () {
+      return this._attack;
+    }
+    set attack (newAttack) {
+      this._attack = newAttack;
+    }
+  
+	get speed () {
+		return this._speed;
+	}
+
+	set speed (newSpeed) {
+		this._speed = newSpeed;
+	}
+
+	get defense () {
+		return this._defense;
+	}
+
+	set defense (newDefense) {
+		this._defense = newDefense;
+	}
+  }
+  let p1 = new Player("Cait", 1, "Hero", 14, 5, 4, 1, 4, 7, 3);
+  
