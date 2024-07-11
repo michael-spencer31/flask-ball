@@ -370,42 +370,6 @@ function getTeamLogoURL(teamName) {
     return teamLogos[teamName] || '/static/images/logos/default_logo.png'; // Default logo URL if not found
 }
 
-class Player {
-    constructor(name, level, job, HP, Attack, Defense, Magic, Resistance, Speed) {
-        this.name = name;
-        this.level = level;
-        this.job = job;
-        this.HP = HP;
-        this.Attack = Attack;
-        this.Defense = Defense;
-        this.Magic = Magic;
-        this.Resistance = Resistance;
-        this.Speed = Speed;
-    }
-}
-
-class Armour {
-    constructor(name, description, defense, resistance, speed) {
-        this.name = name;
-        this.description = description;
-        this.defense = defense;
-        this.resistance = resistance;
-        this.speed = speed;
-    }
-}
-
-let p1 = new Player("Cait", 1, "Hero", 17, 5, 3, 1, 3, 4);
-let a1 = new Armour("Iron Chestpiece", "A sturdy iron chestpiece", 11, 1, -2);
-
-function getVal (player, armour) {
-    player.Defense += armour.defense;
-    player.Resistance += armour.Resistance;
-    player.Speed += armour.speed;
-}
-
-function toString (player) {
-    console.log(p1.name + " Level " + p1.level + " " + p1.job + "\nAttack " + p1.Attack + " \nDefense: " + p1.Defense + " \nResistence: " + p1.Resistance + " \nSpeed: " + p1.Speed);
-}
 // function to convert 24 hour to 12 hour time
 function convertTo24HourFormat (time) {
     let [hours, minutes] = time.split(':');
@@ -423,26 +387,3 @@ function convertTo24HourFormat (time) {
     return time12;
 }
 
-function openChest() {
-
-    const odds = {
-        common: 60,
-        uncommon: 30,
-        rare: 8,
-        epic: 1,
-        legendary: 0.5
-    };
-    let randomNumber = Math.random() * 100;
-
-    if (randomNumber < odds.legendary) {
-        return "You found a legendary item!";
-    } else if (randomNumber < odds.legendary + odds.epic) {
-        return "You found an epic item!";
-    } else if (randomNumber < odds.legendary + odds.epic + odds.rare) {
-        return "You found a rare item!";
-    } else if (randomNumber < odds.legendary + odds.epic + odds.rare + odds.uncommon) {
-        return "You found an uncommon item!";
-    } else {
-        return "You found a common item.";
-    }
-}
