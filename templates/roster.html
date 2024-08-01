@@ -15,7 +15,7 @@
         <div class="container">
             <form>
                 <div class="form-group">
-                    <label for="team">Select:</label>
+                    <label for="team_list">Select:</label>
                     <select class="form-control" id="team_list">
                         <option value="Arizona Diamondbacks">Arizona Diamondbacks</option>
                         <option value="Atlanta Braves">Atlanta Braves</option>
@@ -50,13 +50,13 @@
                     </select>
                 </div>
             </form>
-            <button type="button" class="btn btn-primary" onclick="getRoster()">Search</button>
+            <button for="roster_data" type="button" class="btn btn-primary" onclick="getRoster()">Search</button>
         </div>
 
         <div class="container">
             <div class="panel panel-default">
-                <label for="rst"></label>
-                <div id="roster_data"></div>
+                <p id="rst"></p>
+                <p id="roster_data"></p>
             </div>
         </div>
 

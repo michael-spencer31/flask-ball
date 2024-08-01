@@ -56,12 +56,12 @@
 }
 
 .calendar-day.current-day {
-    background-color: #009879;
+    background-color: #037c64;
     color: white;
 }
 
 .nav-button {
-    background-color: #009879;
+    background-color: #037c64;
     border: none;
     color: white;
     padding: 10px 15px;
@@ -72,11 +72,26 @@
 }
 
 .nav-button:hover {
-    background-color: #009879;
+    background-color: #037c64;
 }
 
+.navbar-brand {
+    color: black !important;
+}
+
+.navbar-brand:focus {
+    color: black !important;
+}
+
+.navbar-default {
+    color: black !important;
+}
+
+.navbar-nav>li>a {
+    color: black !important;
+}
 .btn-primary {
-    background-color: #009879 !important;
+    background-color: #037c64 !important;
 }
 
 body {
@@ -84,10 +99,7 @@ body {
     margin: 20px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+
 
 table {
     width: 100%;
@@ -98,7 +110,7 @@ table {
 }
 
 table thead tr {
-    background-color: #009879;
+    background-color: #037c64;
     color: #ffffff;
     text-align: left;
 }
@@ -116,10 +128,10 @@ table tbody tr:nth-of-type(even) {
 }
 
 table tbody tr:first-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid #037c64;
 }
 table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid #037c64;
 }
 
 table tbody tr:hover {
