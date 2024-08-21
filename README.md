@@ -3,3 +3,5 @@
 A TSN like baseball website, built using Flask. Get's data through the MLB API.
 
 Hosted at on Render at https://flask-ball.onrender.com/
+
+Note the first page load may be very slow due to Render's free instance.
