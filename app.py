@@ -137,6 +137,6 @@ def get_box_score():
     return statsapi.standings()
 
 # Use to run locally on port 5000 (by default)
-# Remove this when moving to production
+# Remove this when moving to production, if needed
 if __name__ == '__main__':
     app.run(debug=True)
